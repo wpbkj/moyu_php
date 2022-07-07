@@ -25,7 +25,7 @@ Email:wpbkj123@163.com
 ### 3、无需安装直接访问站点
 
 #### 站点示例截图
-![moyu](https://www.wpbkj.com/moyu_php/moyu.jepg)
+![moyu](https://www.wpbkj.com/moyu_php/moyu.jpeg)
 
 
 
