@@ -2,10 +2,6 @@
 /**
 *摸鱼办提醒（PHP版）
 *该文件为农历支持
-*
-*@author    WPBKJ
-*@copyright WPBKJ(www.wpbkj.com)
-*@license   GNU General Public License 2.0
 */
 class Lunar{
 var $MIN_YEAR=1891;
@@ -107,7 +103,7 @@ function getLunarMonths($year){
 
 /** 
 * 计算阴历日期与正月初一相隔的天数 
-* @param year http://www.codetc.com/
+* @param year
 * @param month 
 * @param date 
 */ 
