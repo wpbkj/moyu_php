@@ -5,6 +5,7 @@
 摸鱼办提醒由PHP构建，开发人员：[WPBKJ](https://www.wpbkj.com/)
 
 摸鱼办是一个具有娱乐调侃性质的虚拟机构。摸鱼办提醒则提醒各位摸鱼人各个假期何时到来，为摸鱼人种下希望（狗头）。项目整体由PHP构建。
+后期将考虑出API
 
 ### 示例站
 [摸鱼办_WPBKJ](https://www.wpbkj.com/moyu_php/)
