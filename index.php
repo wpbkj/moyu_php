@@ -5,7 +5,7 @@
 *@author    WPBKJ
 *@copyright WPBKJ(www.wpbkj.com)
 *@license   GNU General Public License 2.0
-*@version   $Id:index.php 1.0.1 2022/7/4 10:00 $
+*@version   $Id:index.php 1.0.2 2023/1/15 10:00 $
 */
 
 /** 载入农历支持 */
@@ -100,6 +100,8 @@ $title['ILD'] = '劳动节';
 /** 端午节 */
 $vacDate['DBF'] = lunarDayJudge(5,5);
 $title['DBF'] = '端午节';
+
+asort($vacDate);
 
 ?>
 <!DOCTYPE html>
