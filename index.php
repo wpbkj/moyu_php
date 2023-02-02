@@ -5,7 +5,7 @@
 *@author    WPBKJ
 *@copyright WPBKJ(www.wpbkj.com)
 *@license   GNU General Public License 2.0
-*@version   $Id:index.php 1.0.2 2023/1/15 10:00 $
+*@version   $Id:index.php 1.0.3 2023/2/2 11:30 $
 */
 
 /** 载入农历支持 */
@@ -14,50 +14,69 @@ $lunar=new Lunar();
 
 /** 定义时间 */
 $nowYear = date('Y');
-$nextYear = $nowYear+1;
+$nextYear = $nowYear + 1;
 $nowDate = date("Y-m-d");
 $nowWeek = date('N');
 
 /** 将文本类型日期转换为时间戳方法 */
 function changeDate($date){
-    list($year,$month,$day) = explode('-',$date);
-    return mktime(0,0,0,$month,$day,$year);
+    list($year, $month, $day) = explode('-', $date);
+    return mktime(0, 0, 0, $month, $day, $year);
 }
 
 /** 计算两日期间隔时间（Y-m-d格式） */
-function countDay($dateBegin,$dateEnd){
-    $res = (changeDate($dateEnd) - changeDate($dateBegin)) / (3600*24);
+function countDay($dateBegin, $dateEnd){
+    $res = (changeDate($dateEnd) - changeDate($dateBegin)) / (3600 * 24);
     return $res;
 }
 
 /** 判断今年该日期是否已过并计算与当前相差时间（农历） */
-function lunarDayJudge($month,$day){
+function lunarDayJudge($month, $day){
     global $lunar;
     global $nowDate;
     global $nowYear;
     global $nextYear;
-    $date = $lunar->convertLunarToSolar($nowYear,$month,$day);
+    $date = $lunar->convertLunarToSolar($nowYear, $month, $day);
     $date = $date[0].'-'.$date[1].'-'.$date[2];
     if(changeDate($nowDate) <= changeDate($date)){
-        return countDay($nowDate,$date);
+        return countDay($nowDate, $date);
     }else{
-        $date = $lunar->convertLunarToSolar($nextYear,$month,$day);
+        $date = $lunar->convertLunarToSolar($nextYear, $month, $day);
         $date = $date[0].'-'.$date[1].'-'.$date[2];
-        return countDay($nowDate,$date);
+        return countDay($nowDate, $date);
     }
 }
 
 /** 判断今年该日期是否已过并计算与当前相差时间（公历） */
-function dayJudge($month,$day){
+function dayJudge($month, $day){
     global $nowDate;
     global $nowYear;
     global $nextYear;
     $date = $nowYear.'-'.$month.'-'.$day;
     if(changeDate($nowDate) <= changeDate($date)){
-        return countDay($nowDate,$date);
+        return countDay($nowDate, $date);
     }else{
         $date = $nextYear.'-'.$month.'-'.$day;
-        return countDay($nowDate,$date);
+        return countDay($nowDate, $date);
+    }
+}
+
+/** 计算下一清明节日期 */
+function TSDcount($year){
+    $day = round((($year-2000) * 0.2422 + 4.81) - (($year-2000)/4));
+    return $day;
+}
+
+function TSDjudge(){
+    global $nowDate;
+    global $nowYear;
+    global $nextYear;
+    $nowTSDdata = $nowYear.'-4-'.TSDcount($nowYear);
+    if(changeDate($nowDate) <= changeDate($nowTSDdata)){
+        return countDay($nowDate, $nowTSDdata);
+    } else {
+        $nextTSDdata = $nextYear.'-4-'.TSDcount($nextYear);
+        return countDay($nowDate, $nextTSDdata);
     }
 }
 
@@ -90,7 +109,7 @@ $vacDate['LNY'] = lunarDayJudge(1,1);
 $title['LNY'] = '过年';
 
 /** 清明节 */
-$vacDate['TSD'] = lunarDayJudge(4,5);
+$vacDate['TSD'] = TSDjudge();
 $title['TSD'] = '清明节';
 
 /** 劳动节 */
@@ -112,7 +131,6 @@ asort($vacDate);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="static/moyu.ico" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css">
 
     <style>
         code[class*="language-"],
